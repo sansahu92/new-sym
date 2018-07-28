@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div class="form-group row col-md-12">
+<div class="col-md-8">
+{% for items in configurator_items %}
+{% if(items.type=='select')%}
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label">{{ items.name}}</label>
+  <div class="col-md-3">
+  <select class="form-control {%if(items.name=='Colour')%}colourAttr{% endif %}" name="profile" id="FormControlSelect-{{items.id}}">
+  {% for itemsAll in configurator_items_all %}
+    {% if(itemsAll.configuratorItemId==items.id)%}
+    <option {%if(items.name=='Colour')%}data-color="{{itemsAll.colour}}"{% endif %} value="{{itemsAll.id}}">{{itemsAll.name}}</option>
+    {% endif %}
+  {% endfor %}
+  </select>
+  </div>
+</div>
+{% endif %}
+{% if(items.type=='select hidden')%}
+<div class="form-group row d-none">
+  <label class="col-sm-2 col-form-label">{{ items.name}}</label>
+  <div class="col-md-3">
+  <select class="form-control" name="profile" id="FormControlSelectHidden-{{items.id}}">
+  {% for itemsAll in configurator_items_all %}
+    {% if(itemsAll.configuratorItemId==items.id)%}
+    <option value="{{itemsAll.id}}">{{itemsAll.name}}</option>
+    {% endif %}
+  {% endfor %}
+  </select>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+
+</div>
+  <div class="col-md-4">
+    <div id="colour-box" style="background:#fff;border:3px solid #000;height:300px;width:300px:margin:auto;" class="square-box">
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
